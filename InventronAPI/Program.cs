@@ -20,6 +20,14 @@ builder.Services.AddAutoMapper(cfg => cfg.AddMaps(typeof(ServiceMapper).Assembly
 
 builder.Services.AddScoped<IProductsService, ProductsService>();
 
+builder.Services.AddCors(options =>
+{
+	options.AddPolicy("Frontend", policy =>
+		policy.WithOrigins("http://localhost:5173")
+		.AllowAnyHeader()
+		.AllowAnyMethod());
+});
+
 
 var app = builder.Build();
 
@@ -29,6 +37,8 @@ if (app.Environment.IsDevelopment())
 	app.MapOpenApi();
 	app.MapScalarApiReference();
 }
+
+app.UseCors("Frontend");
 
 app.UseHttpsRedirection();
 
