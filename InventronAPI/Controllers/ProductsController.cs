@@ -46,14 +46,14 @@ namespace InventronAPI.Controllers
 			return Ok(await _productsService.AddProductsMany(products));
 		}
 
-		[HttpPut("{id}")]
+		[HttpPut("Update/{id}")]
 		public async Task<IActionResult> UpdateProduct(int id, ProductDto product)
 		{
 			var updated = await _productsService.UpdateProductAsync(id, product);
 			return updated ? NoContent() : NotFound("Given product was not found.");
 		}
 
-		[HttpDelete("{id}")]
+		[HttpDelete("Delete/{id}")]
 		public async Task<IActionResult> DeleteProduct(int id) 
 		{
 			var deleted = await _productsService.DeleteProductAsync(id);
