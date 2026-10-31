@@ -4,16 +4,16 @@ namespace InventronAPI.Services.Interfaces
 {
 	public interface IProductsService
 	{
-		Task<List<ProductDto>> GetProductsAsync();
+		Task<List<ProductDto>> GetProductsAsync(CancellationToken ct = default);
 
-		Task<ProductDto> GetByIdAsync(int id);
+		Task<ProductDto?> GetByIdAsync(int id, CancellationToken ct = default);
 
-		Task<ProductDto> AddProductAsync(NewProductRequestDto product);
+		Task<ProductDto> AddProductAsync(NewProductRequestDto product, CancellationToken ct = default);
 
-		Task<bool> AddProductsMany(List<NewProductRequestDto> products);
+		Task<bool> AddProductsMany(List<NewProductRequestDto> products, CancellationToken ct = default);
 
-		Task<bool> UpdateProductAsync(int id, ProductDto product);
+		Task<bool> UpdateProductAsync(int id, ProductDto product, CancellationToken ct = default);
 
-		Task<bool> DeleteProductAsync(int id);
+		Task<bool> DeleteProductAsync(int id, CancellationToken ct = default);
 	}
 }

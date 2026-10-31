@@ -16,16 +16,16 @@ namespace InventronAPI.Controllers
 		}
 
 		[HttpGet]
-		public async Task<ActionResult<List<ProductDto>>> Get()
+		public async Task<ActionResult<List<ProductDto>>> Get(CancellationToken ct)
 		{
-			var products = await _productsService.GetProductsAsync();
+			var products = await _productsService.GetProductsAsync(ct);
 			return Ok(products);
 		}
 
 		[HttpGet("{id}")]
-		public async Task<ActionResult<ProductDto>> GetById(int id)
+		public async Task<ActionResult<ProductDto?>> GetById(int id, CancellationToken ct)
 		{
-			var product = await _productsService.GetByIdAsync(id);
+			var product = await _productsService.GetByIdAsync(id, ct);
 
 			if (product is null)
 				return NotFound();
@@ -34,29 +34,29 @@ namespace InventronAPI.Controllers
 		}
 
 		[HttpPost("Add")]
-		public async Task<ActionResult<ProductDto>> AddProduct(NewProductRequestDto product)
+		public async Task<ActionResult<ProductDto>> AddProduct(NewProductRequestDto product, CancellationToken ct)
 		{
-			var addedProduct = await _productsService.AddProductAsync(product);
+			var addedProduct = await _productsService.AddProductAsync(product, ct);
 			return CreatedAtAction(nameof(GetById), new { id = addedProduct.Id }, addedProduct);
 		}
 
 		[HttpPost("AddList")]
-		public async Task<IActionResult> AddProductsMany(List<NewProductRequestDto> products)
+		public async Task<IActionResult> AddProductsMany(List<NewProductRequestDto> products, CancellationToken ct)
 		{
-			return Ok(await _productsService.AddProductsMany(products));
+			return Ok(await _productsService.AddProductsMany(products, ct));
 		}
 
 		[HttpPut("Update/{id}")]
-		public async Task<IActionResult> UpdateProduct(int id, ProductDto product)
+		public async Task<IActionResult> UpdateProduct(int id, ProductDto product, CancellationToken ct)
 		{
-			var updated = await _productsService.UpdateProductAsync(id, product);
+			var updated = await _productsService.UpdateProductAsync(id, product, ct);
 			return updated ? NoContent() : NotFound("Given product was not found.");
 		}
 
 		[HttpDelete("Delete/{id}")]
-		public async Task<IActionResult> DeleteProduct(int id) 
+		public async Task<IActionResult> DeleteProduct(int id, CancellationToken ct) 
 		{
-			var deleted = await _productsService.DeleteProductAsync(id);
+			var deleted = await _productsService.DeleteProductAsync(id, ct);
 			return deleted ? NoContent() : NotFound("Given product was not found.");
 		}
 	}
