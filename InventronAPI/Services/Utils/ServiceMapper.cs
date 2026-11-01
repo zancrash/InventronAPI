@@ -8,8 +8,8 @@ namespace InventronAPI.Services.Utils
 	{
 		public ServiceMapper()
 		{
-			CreateMap<Product, ProductDto>().ReverseMap();
-			CreateMap<Product, NewProductRequestDto>().ReverseMap();
+			CreateMap<Item, ItemDto>().ReverseMap();
+			CreateMap<Item, NewItemRequestDto>().ReverseMap();
 		}
 	}
 }

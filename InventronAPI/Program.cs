@@ -13,12 +13,15 @@ builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<ITenantProvider, HttpTenantProvider>();
+
 builder.Services.AddDbContext<AppDbContext>(options => 
 	options.UseSqlServer(builder.Configuration.GetConnectionString("LocalConnection")));
 
 builder.Services.AddAutoMapper(cfg => cfg.AddMaps(typeof(ServiceMapper).Assembly));
 
-builder.Services.AddScoped<IProductsService, ProductsService>();
+builder.Services.AddScoped<IItemsService, ItemsService>();
 
 builder.Services.AddCors(options =>
 {
